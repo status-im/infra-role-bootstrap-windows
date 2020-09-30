@@ -1,0 +1,15 @@
+---
+# Base packages installed during bootstrap.
+bootstrap__base_packages:
+  - 7zip
+  - git
+  - fzf
+  - dos2unix
+  - findutils
+  - wget
+  - python
+  - ntop
+  - jq
+
+# Install additional packages during bootstrap.
+bootstrap__extra_packages: []
