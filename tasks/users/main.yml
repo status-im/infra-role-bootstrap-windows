@@ -1,0 +1,7 @@
+---
+- name: Configure required users
+  tags: ['role::bootstrap:users']
+  include_tasks: user.yml
+  with_items: '{{ bootstrap__active_users }}'
+  loop_control:
+    loop_var: 'user'
