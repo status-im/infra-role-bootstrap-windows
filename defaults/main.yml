@@ -6,6 +6,7 @@ bootstrap__base_packages:
   - 7zip
   - git
   - fzf
+  - curl
   - dos2unix
   - findutils
   - wget
