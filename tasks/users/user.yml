@@ -8,23 +8,22 @@
     # We set garbage since we use SSH keys anyway
     password: '{{ ansible_date_time.epoch | password_hash("sha512") }}'
 
-- name: '{{ user.name }} - Load user public key files'
-  tags: ['role::bootstrap:users']
-  become: no
-  local_action: stat
-  args:
-    path: '{{ role_path }}/files/keys/{{ user.name }}.pub'
-  ignore_errors: yes
-  register: pubkeyfile
-
 - name: '{{ user.name }} - Create SSH config directory'
   tags: ['role::bootstrap:users']
   win_file:
     path: 'C:\Users\{{ user.name }}\.ssh'
     state: 'directory'
 
-- name: '{{ user.name }} - Copy over the SSH public key'
+- name: '{{ user.name }} - Copy over SSH public key from entry'
+  tags: ['role::bootstrap:users']
+  win_copy:
+    dest: '{{ role_path }}/files/keys/{{ user.name }}.pub'
+    content: '{{ user.key }}'
+  when: user.key is defined
+
+- name: '{{ user.name }} - Copy over SSH public key from file'
   tags: ['role::bootstrap:users']
   win_copy:
     dest: 'C:\Users\{{ user.name }}\.ssh\authorized_keys'
-    src: '{{ pubkeyfile.stat.path }}'
+    src: '{{ role_path }}/files/keys/{{ user.name }}.pub'
+  when: user.key is not defined
