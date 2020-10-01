@@ -1,0 +1,16 @@
+---
+- name: Install NuGet for admin
+  win_shell: Find-PackageProvider -Name Nuget -ForceBootstrap -IncludeDependencies -Force
+
+- name: Install PSFzf for admin
+  win_shell: Install-Module -Name PSFzf -RequiredVersion 2.0.0 -Confirm:$false -Force
+
+- name: Create folder for powershell profile
+  win_file:
+    path: 'C:\Users\admin\Documents\WindowsPowerShell'
+    state: 'directory'
+
+- name: Create powershell profile file
+  win_copy:
+    src: 'Profile.ps1'
+    dest: 'C:\Users\admin\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1'

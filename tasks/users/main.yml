@@ -1,4 +1,8 @@
 ---
+- name: Configure admin user
+  tags: ['role::bootstrap:users']
+  include_tasks: admin.yml
+
 - name: Configure required users
   tags: ['role::bootstrap:users']
   include_tasks: user.yml
