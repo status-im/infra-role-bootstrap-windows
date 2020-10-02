@@ -11,6 +11,7 @@ bootstrap__base_packages:
   - findutils
   - wget
   - python
+  - neovim
   - ntop
   - jq
 
