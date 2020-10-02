@@ -5,6 +5,7 @@
     name: '{{ user.name }}'
     groups: '{{ bootstrap__default_groups + user.groups }}'
     profile: 'C:\Users\{{ user.name }}'
+    home_directory: 'C:\Users\{{ user.name }}'
     # We set garbage since we use SSH keys anyway
     password: '{{ ansible_date_time.epoch | password_hash("sha512") }}'
 
