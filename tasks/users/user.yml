@@ -9,6 +9,10 @@
     # We set garbage since we use SSH keys anyway
     password: '{{ ansible_date_time.epoch | password_hash("sha512") }}'
 
+- name: '{{ user.name }} - Create profile'
+  win_user_profile:
+    username: '{{ user.name }}'
+
 - name: '{{ user.name }} - Create SSH config directory'
   tags: ['role::bootstrap:users']
   win_file:
