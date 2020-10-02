@@ -1,15 +1,10 @@
 ---
-- name: Check if scoop is installed
-  tags: ['role::bootstrap:packages']
-  win_shell: 'Get-Command scoop'
-  ignore_errors: yes
-  no_log: true
-  register: scoop_check
-
 - name: Install scoop package manager
   tags: ['role::bootstrap:packages']
-  win_shell: 'Invoke-Expression (New-Object System.Net.WebClient).DownloadString("https://get.scoop.sh")'
-  when: scoop_check.failed
+  win_shell: |
+    Invoke-Expression (
+      New-Object System.Net.WebClient
+    ).DownloadString("https://get.scoop.sh")
 
 - name: Install base packages
   tags: ['role::bootstrap:packages']
