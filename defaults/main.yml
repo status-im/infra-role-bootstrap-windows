@@ -22,6 +22,7 @@ bootstrap__extra_packages: []
 #
 # users to add to every host, this also supports a `key` attribute
 bootstrap__active_users:
+  - { name: admin, groups: [] }
   - { name: jakub, groups: [] }
   - { name: petty, groups: [] }
 
