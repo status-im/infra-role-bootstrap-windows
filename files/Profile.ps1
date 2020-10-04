@@ -8,6 +8,7 @@ Set-PsFzfOption -PSReadlineChordReverseHistory 'Ctrl+r'
 # Bash-like shorthands
 function ll { dir }
 function htop { ntop }
+function du { Get-PSDrive }
 
 # Compute file hashes - useful for checking successful downloads 
 function md5    { Get-FileHash -Algorithm MD5 $args }
