@@ -19,6 +19,11 @@
     path: 'C:\Users\{{ user.name }}\.ssh'
     state: 'directory'
 
+- name: '{{ user.name }} - Set the owner on SSH config directory'
+  win_owner:
+    path: 'C:\Users\{{ user.name }}\.ssh'
+    user: '{{ user.name }}'
+
 - name: '{{ user.name }} - Copy over SSH public key from entry'
   tags: ['role::bootstrap:users']
   win_copy:
