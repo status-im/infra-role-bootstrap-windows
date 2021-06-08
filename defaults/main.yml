@@ -4,16 +4,25 @@
 # Base packages installed during bootstrap.
 bootstrap__base_packages:
   - 7zip
-  - git
-  - fzf
+  - ag
+  - cmder
   - curl
+  - dd
+  - diffutils
   - dos2unix
   - findutils
-  - wget
-  - python
-  - neovim
-  - ntop
+  - fzf
+  - gawk
+  - git
+  - gsudo
   - jq
+  - make
+  - neovim
+  - netcat
+  - ntop
+  - python
+  - sysinternals
+  - wget
 
 # Install additional packages during bootstrap.
 bootstrap__extra_packages: []
