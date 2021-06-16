@@ -21,6 +21,7 @@ bootstrap__base_packages:
   - netcat
   - ntop
   - python
+  - sed
   - sysinternals
   - wget
 
