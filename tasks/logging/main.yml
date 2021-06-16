@@ -1,0 +1,10 @@
+---
+# By default Task Scheduler operations logs are disabled.
+# https://stackoverflow.com/a/23228436
+- name: Enable Task Scheduler logs
+  tags: ['role::bootstrap:logging']
+  win_shell: |
+    $logName = 'Microsoft-Windows-TaskScheduler/Operational'
+    $log = New-Object System.Diagnostics.Eventing.Reader.EventLogConfiguration $logName
+    $log.IsEnabled=$true
+    $log.SaveChanges()

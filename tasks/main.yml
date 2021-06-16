@@ -1,4 +1,7 @@
 ---
+- import_tasks: logging/main.yml
+  tags: ['role::bootstrap:logging']
+
 - import_tasks: packages/main.yml
   tags: ['role::bootstrap:packages']
 
