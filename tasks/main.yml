@@ -7,6 +7,7 @@
 
 - import_tasks: consul/main.yml
   tags: ['role::bootstrap:consul']
+  when: bootstrap__consul_enabled
 
 - import_tasks: users/main.yml
   tags: ['role::bootstrap:users']
