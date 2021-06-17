@@ -1,4 +1,12 @@
 ---
+- name: Install scoop package manager
+  tags: ['role::bootstrap:packages']
+  become_user: 'admin'
+  win_shell: |
+    Invoke-Expression (
+      New-Object System.Net.WebClient
+    ).DownloadString("https://get.scoop.sh")
+
 - name: Install NuGet for admin
   win_shell: Find-PackageProvider -Name Nuget -ForceBootstrap -IncludeDependencies -Force
 
