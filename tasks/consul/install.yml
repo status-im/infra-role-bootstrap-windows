@@ -5,8 +5,9 @@
     state: 'directory'
   with_items:
     - '{{ bootstrap__consul_dir }}'
-    - '{{ bootstrap__consul_cert_dir }}'
     - '{{ bootstrap__consul_data_dir }}'
+    - '{{ bootstrap__consul_certs_dir }}'
+    - '{{ bootstrap__consul_config_dir }}'
 
 - name: Consul | Download Consul ZIP
   win_get_url:
@@ -20,3 +21,8 @@
     src: '{{ bootstrap__consul_dir }}/{{ bootstrap__consul_zip }}'
     dest: '{{ bootstrap__consul_dir }}'
     creates: '{{ bootstrap__consul_binary }}'
+
+- name: Consul | Remove Consul ZIP
+  win_file:
+    path: '{{ bootstrap__consul_dir }}/{{ bootstrap__consul_zip }}'
+    state: 'absent'

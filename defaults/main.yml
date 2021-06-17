@@ -55,8 +55,9 @@ bootstrap__consul_enabled: true
 
 bootstrap__consul_dir: 'C:/consul'
 bootstrap__consul_binary: '{{ bootstrap__consul_dir }}/consul.exe'
-bootstrap__consul_cert_dir: '{{ bootstrap__consul_dir }}/cert'
+bootstrap__consul_certs_dir: '{{ bootstrap__consul_dir }}/certs'
 bootstrap__consul_data_dir: '{{ bootstrap__consul_dir }}/data'
+bootstrap__consul_config_dir: '{{ bootstrap__consul_dir }}/config'
 bootstrap__consul_version: '1.9.3'
 bootstrap__consul_zip: 'consul_{{ bootstrap__consul_version }}_windows_amd64.zip'
 bootstrap__consul_zip_url: 'https://releases.hashicorp.com/consul/{{ bootstrap__consul_version }}/{{ bootstrap__consul_zip }}'
@@ -88,9 +89,9 @@ bootstrap__consul_config:
   datacenter: '{{ bootstrap__data_center | mandatory }}'
   retry_join: ['{{ bootstrap__consul_server_addr }}']
   advertise_addr: '{{ ansible_host | mandatory }}'
-  ca_file: '{{ bootstrap__consul_cert_dir }}/consul-ca.crt'
-  cert_file: '{{ bootstrap__consul_cert_dir }}/consul-client.crt'
-  key_file: '{{ bootstrap__consul_cert_dir }}/consul-client.key'
+  ca_file: '{{ bootstrap__consul_certs_dir }}/consul-ca.crt'
+  cert_file: '{{ bootstrap__consul_certs_dir }}/consul-client.crt'
+  key_file: '{{ bootstrap__consul_certs_dir }}/consul-client.key'
   telemetry:
     disable_compat_1.9: true
   limits:

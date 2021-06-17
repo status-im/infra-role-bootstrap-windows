@@ -2,7 +2,7 @@
 - name: Consul | Create service
   win_service:
     name: 'consul'
-    path: '{{ bootstrap__consul_binary }} agent -config-dir={{ bootstrap__consul_dir }}'
+    path: '{{ bootstrap__consul_binary }} agent -config-dir={{ bootstrap__consul_config_dir }}'
     display_name: 'Consul'
     description: 'Consul provides host and service discovery and metadata.'
     username: 'LocalSystem'
