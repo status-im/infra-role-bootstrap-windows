@@ -1,6 +1,13 @@
 ---
+- win_shell: '$env:UserName'
+  become: true
+  become_user: 'admin'
+  register: debug_output
+- debug: var=debug_output
+
 - name: Install scoop package manager
-  tags: ['role::bootstrap:packages']
+  tags: ['role::bootstrap:users']
+  become: true
   become_user: 'admin'
   win_shell: |
     Invoke-Expression (
@@ -8,17 +15,21 @@
     ).DownloadString("https://get.scoop.sh")
 
 - name: Install NuGet for admin
+  tags: ['role::bootstrap:users']
   win_shell: Find-PackageProvider -Name Nuget -ForceBootstrap -IncludeDependencies -Force
 
 - name: Install PSFzf for admin
+  tags: ['role::bootstrap:users']
   win_shell: Install-Module -Name PSFzf -RequiredVersion 2.0.0 -Confirm:$false -Force
 
 - name: Create folder for powershell profile
+  tags: ['role::bootstrap:users']
   win_file:
     path: 'C:\Users\admin\Documents\WindowsPowerShell'
     state: 'directory'
 
 - name: Create powershell profile file
+  tags: ['role::bootstrap:users']
   win_copy:
     src: 'Profile.ps1'
     dest: 'C:\Users\admin\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1'
