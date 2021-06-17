@@ -73,7 +73,7 @@ bootstrap__consul_config:
     stage: '{{ hostname.split(".") | last }}'
   protocol: 3
   client_addr: '0.0.0.0'
-  ports: { http: -1, https: 8400 }
+  ports: { http: 8500, https: 8400 }
   addresses: { https: '0.0.0.0' }
   acl_default_policy: 'allow'
   skip_leave_on_interrupt: true
