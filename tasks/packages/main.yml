@@ -1,15 +1,5 @@
 ---
-- name: Install scoop package manager
+- import_tasks: packages.yml
   tags: ['role::bootstrap:packages']
-  win_shell: |
-    Invoke-Expression (
-      New-Object System.Net.WebClient
-    ).DownloadString("https://get.scoop.sh")
-
-- name: Add extras scoop bucket
+- import_tasks: git_fix.yml
   tags: ['role::bootstrap:packages']
-  win_shell: 'scoop bucket add extras'
-
-- name: Install base packages
-  tags: ['role::bootstrap:packages']
-  win_shell: 'scoop install --global {{ bootstrap__base_packages | join(" ") }}'
