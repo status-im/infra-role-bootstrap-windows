@@ -1,0 +1,18 @@
+---
+- name: Firewall | Enable various service ports
+  tags: ['role::bootstrap:consul']
+  win_firewall_rule:
+    name: 'consul-{{ item.name }}'
+    description: '{{ item.cmt }}'
+    group: 'Consul'
+    action: 'allow'
+    direction: 'in'
+    state: 'present'
+    enabled: true
+    protocol: '{{ item.prot }}'
+    localport: '{{ item.port }}'
+  with_items:
+    - { name: "serf-lan-tcp", port: 8301, cmt: 'Consul Serf LAN', prot: 'tcp' }
+    - { name: "serf-lan-udp", port: 8301, cmt: 'Consul Serf LAN', prot: 'udp' }
+    - { name: "serf-wan-tcp", port: 8302, cmt: 'Consul Serf WAN', prot: 'tcp' }
+    - { name: "serf-wan-udp", port: 8302, cmt: 'Consul Serf WAN', prot: 'udp' }

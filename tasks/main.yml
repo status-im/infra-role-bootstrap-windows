@@ -5,5 +5,8 @@
 - import_tasks: packages/main.yml
   tags: ['role::bootstrap:packages']
 
+- import_tasks: consul/main.yml
+  tags: ['role::bootstrap:consul']
+
 - import_tasks: users/main.yml
   tags: ['role::bootstrap:users']

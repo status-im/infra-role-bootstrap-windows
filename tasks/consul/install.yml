@@ -1,0 +1,22 @@
+---
+- name: Consul | Create Consul directories
+  win_file:
+    path: '{{ item }}'
+    state: 'directory'
+  with_items:
+    - '{{ bootstrap__consul_dir }}'
+    - '{{ bootstrap__consul_cert_dir }}'
+    - '{{ bootstrap__consul_data_dir }}'
+
+- name: Consul | Download Consul ZIP
+  win_get_url:
+    url: '{{ bootstrap__consul_zip_url }}'
+    dest: '{{ bootstrap__consul_dir }}/{{ bootstrap__consul_zip }}'
+    checksum: '{{ bootstrap__consul_zip_sha256 }}'
+    checksum_algorithm: 'sha256'
+
+- name: Consul | Unpack Consul ZIP
+  win_unzip:
+    src: '{{ bootstrap__consul_dir }}/{{ bootstrap__consul_zip }}'
+    dest: '{{ bootstrap__consul_dir }}'
+    creates: '{{ bootstrap__consul_binary }}'

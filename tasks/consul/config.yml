@@ -1,0 +1,18 @@
+---
+- name: Consul | Copy over client cert/key pairs
+  tags: ['role::bootstrap:consul']
+  win_copy:
+    src: 'files/{{ item }}'
+    dest: '{{ bootstrap__consul_cert_dir }}/{{ item }}'
+  with_items:
+    - consul-ca.crt
+    - consul-client.crt
+    - consul-client.key
+
+- name: Consul | Create consul config file
+  tags: ['role::bootstrap:consul']
+  win_copy:
+    dest: '{{ bootstrap__consul_dir }}/config.json'
+    content: ' {{ bootstrap__consul_config | to_nice_json }}'
+  notify:
+    - Restart consul

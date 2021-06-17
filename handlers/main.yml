@@ -1,0 +1,5 @@
+---
+- name: Restart consul
+  win_service:
+    name: 'consul'
+    state: 'restarted'

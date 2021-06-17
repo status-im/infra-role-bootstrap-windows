@@ -1,0 +1,9 @@
+---
+- import_tasks: install.yml
+  tags: ['role::bootstrap:consul']
+
+- import_tasks: config.yml
+  tags: ['role::bootstrap:consul']
+
+- import_tasks: service.yml
+  tags: ['role::bootstrap:consul']

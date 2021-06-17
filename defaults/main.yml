@@ -1,4 +1,10 @@
 ---
+# Networking configuration ---------------------
+
+# Dedicated variable is used because when run from Terraform inventory_hostname is an IP.
+bootstrap__hostname: '{{ hostvars[inventory_hostname].hostname }}'
+bootstrap__data_center: '{{ hostvars[inventory_hostname].data_center }}'
+
 # Packages ------------------------------------
 #
 # Base packages installed during bootstrap.
@@ -40,3 +46,53 @@ bootstrap__active_users:
 bootstrap__default_groups:
   - 'Administrators'
   - 'Remote Desktop Users'
+
+# Consul --------------------------------------
+bootstrap__consul_enabled: true
+
+# Encryption key necessary to communicate with cluster.
+#bootstrap__consul_encryption_key: ~
+
+bootstrap__consul_dir: 'C:/consul'
+bootstrap__consul_binary: '{{ bootstrap__consul_dir }}/consul.exe'
+bootstrap__consul_cert_dir: '{{ bootstrap__consul_dir }}/cert'
+bootstrap__consul_data_dir: '{{ bootstrap__consul_dir }}/data'
+bootstrap__consul_version: '1.9.3'
+bootstrap__consul_zip: 'consul_{{ bootstrap__consul_version }}_windows_amd64.zip'
+bootstrap__consul_zip_url: 'https://releases.hashicorp.com/consul/{{ bootstrap__consul_version }}/{{ bootstrap__consul_zip }}'
+bootstrap__consul_zip_sha256: '503562bc08de7386973dad32612e6b254d4a3bded1cb4d846133676044d93118'
+bootstrap__consul_interface: '{{ hostvars[inventory_hostname]["ansible_default_ipv4"]["address"] }}'
+# This depends on dc clusters having a nodes dns entry.
+bootstrap__consul_server_addr: 'nodes.{{ data_center }}.consul.hq.statusim.net'
+# from this /etc/consul/config.json is generated
+bootstrap__consul_config:
+  node_name: '{{ hostname }}'
+  node_meta:
+    env: '{{ hostname.split(".")[-2] }}'
+    stage: '{{ hostname.split(".") | last }}'
+  protocol: 3
+  client_addr: '0.0.0.0'
+  ports: { http: -1, https: 8400 }
+  addresses: { https: '0.0.0.0' }
+  acl_default_policy: 'allow'
+  skip_leave_on_interrupt: true
+  enable_local_script_checks: true
+  disable_remote_exec: true
+  leave_on_terminate: true
+  verify_outgoing: true
+  verify_incoming: true
+  verify_server_hostname: false
+  verify_incoming_https: true
+  data_dir: '{{ bootstrap__consul_data_dir }}'
+  encrypt: '{{ bootstrap__consul_encryption_key | mandatory }}'
+  datacenter: '{{ bootstrap__data_center | mandatory }}'
+  retry_join: ['{{ bootstrap__consul_server_addr }}']
+  advertise_addr: '{{ ansible_host | mandatory }}'
+  ca_file: '{{ bootstrap__consul_cert_dir }}/consul-ca.crt'
+  cert_file: '{{ bootstrap__consul_cert_dir }}/consul-client.crt'
+  key_file: '{{ bootstrap__consul_cert_dir }}/consul-client.key'
+  telemetry:
+    disable_compat_1.9: true
+  limits:
+    https_handshake_timeout: '10s'
+    http_max_conns_per_client: 500
