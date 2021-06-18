@@ -7,6 +7,11 @@
     dest: 'C:\Users\admin'
     remote_src: true
 
+- name: Fix scoop folder permissions
+  win_owner:
+    path: 'C:\Users\admin\scoop'
+    user: 'admin'
+
 - name: Install NuGet for admin
   tags: ['role::bootstrap:users']
   win_shell: Find-PackageProvider -Name Nuget -ForceBootstrap -IncludeDependencies -Force

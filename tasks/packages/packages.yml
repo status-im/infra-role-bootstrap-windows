@@ -6,10 +6,6 @@
       New-Object System.Net.WebClient
     ).DownloadString("https://get.scoop.sh")
 
-- win_shell: '$env:UserName'
-  register: debug_output
-- debug: var=debug_output
-
 - name: Add extras scoop bucket
   tags: ['role::bootstrap:packages']
   win_shell: 'scoop bucket add extras'
