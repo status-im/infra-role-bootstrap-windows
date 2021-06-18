@@ -4,7 +4,6 @@
   become: true
   become_user: 'admin'
   vars:
-    ansible_become_user: '{{ ansible_netbios_name }}\admin'
     ansible_become_pass: '{{ admin_password }}'
   win_shell: |
     Invoke-Expression (
