@@ -1,4 +1,16 @@
 ---
+- name: 'Generate semi-random user password'
+  tags: ['role::bootstrap:users']
+  set_fact:
+    # We set garbage since we use SSH keys anyway
+    user_password: '{{ ansible_date_time.epoch | password_hash("sha512") }}'
+
+- name: 'Save admin password'
+  tags: ['role::bootstrap:users']
+  set_fact:
+    admin_password: '{{ user_password }}'
+  when: user.name == "admin"
+
 - name: '{{ user.name }} - Create user'
   tags: ['role::bootstrap:users']
   win_user:
@@ -6,10 +18,10 @@
     groups: '{{ bootstrap__default_groups + user.groups }}'
     profile: 'C:\Users\{{ user.name }}'
     home_directory: 'C:\Users\{{ user.name }}'
-    # We set garbage since we use SSH keys anyway
-    password: '{{ ansible_date_time.epoch | password_hash("sha512") }}'
+    password: '{{ user_password }}'
 
 - name: '{{ user.name }} - Create profile'
+  tags: ['role::bootstrap:users']
   win_user_profile:
     username: '{{ user.name }}'
 
@@ -20,6 +32,7 @@
     state: 'directory'
 
 - name: '{{ user.name }} - Set the owner on SSH config directory'
+  tags: ['role::bootstrap:users']
   win_owner:
     path: 'C:\Users\{{ user.name }}\.ssh'
     user: '{{ user.name }}'
