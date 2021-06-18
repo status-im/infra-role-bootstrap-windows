@@ -1,18 +1,11 @@
 ---
-- win_shell: '$env:UserName'
-  become: true
-  become_user: 'admin'
-  register: debug_output
-- debug: var=debug_output
-
-- name: Install scoop package manager
+# Using become_user: admin doesn't work on Windows.
+- name: Copy scoop from Administrator
   tags: ['role::bootstrap:users']
-  become: true
-  become_user: 'admin'
-  win_shell: |
-    Invoke-Expression (
-      New-Object System.Net.WebClient
-    ).DownloadString("https://get.scoop.sh")
+  win_copy:
+    src: 'C:\Users\administrator\scoop'
+    dest: 'C:\Users\admin'
+    remote_src: true
 
 - name: Install NuGet for admin
   tags: ['role::bootstrap:users']
