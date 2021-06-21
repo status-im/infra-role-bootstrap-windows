@@ -35,17 +35,24 @@ bootstrap__base_packages:
 bootstrap__extra_packages: []
 
 # Users configuration --------------------------
-#
-# users to add to every host, this also supports a `key` attribute
-bootstrap__active_users:
-  - { name: admin,  groups: [] }
-  - { name: jakub,  groups: [] }
-  - { name: arthur, groups: [] }
-  - { name: petty,  groups: [] }
 
-bootstrap__default_groups:
+# Default groups for core users
+bootstrap__default_core_groups:
   - 'Administrators'
   - 'Remote Desktop Users'
+
+# users to add to every host, this also supports a `key` attribute
+bootstrap__active_core_users:
+  - { name: admin,  win_groups: '{{ bootstrap__default_core_groups }}' }
+  - { name: jakub,  win_groups: '{{ bootstrap__default_core_groups }}' }
+  - { name: arthur, win_groups: '{{ bootstrap__default_core_groups }}' }
+  - { name: petty,  win_groups: '{{ bootstrap__default_core_groups }}' }
+
+# Any additional users that need access
+bootstrap__active_extra_users: []
+
+# Combination of core and extra, change this to override whole list.
+bootstrap__active_users: '{{ bootstrap__active_core_users + bootstrap__active_extra_users }}'
 
 # Consul --------------------------------------
 bootstrap__consul_enabled: true
