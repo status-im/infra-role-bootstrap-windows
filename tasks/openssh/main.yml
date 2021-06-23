@@ -1,0 +1,14 @@
+---
+# We disable use of C:/ProgramData/ssh/administrators_authorized_keys.
+# Instead we always use ~/.ssh/authorized_keys for all users.
+- name: Generate OpenSSH configuration
+  tags: ['role::bootstrap:openssh']
+  win_template:
+    src: 'sshd_config.j2'
+    dest: 'C:/ProgramData/ssh/sshd_config'
+
+- name: Restart OpenSSH service
+  tags: ['role::bootstrap:openssh']
+  win_service:
+    name: 'sshd'
+    state: 'restarted'

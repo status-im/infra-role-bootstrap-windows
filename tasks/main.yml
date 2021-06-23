@@ -11,3 +11,6 @@
 
 - import_tasks: users/main.yml
   tags: ['role::bootstrap:users']
+
+- import_tasks: openssh/main.yml
+  tags: ['role::bootstrap:openssh']
