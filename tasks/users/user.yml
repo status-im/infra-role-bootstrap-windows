@@ -31,12 +31,6 @@
     path: 'C:\Users\{{ user.name }}\.ssh'
     state: 'directory'
 
-- name: '{{ user.name }} - Set the owner on SSH config directory'
-  tags: ['role::bootstrap:users']
-  win_owner:
-    path: 'C:\Users\{{ user.name }}\.ssh'
-    user: '{{ user.name }}'
-
 - name: '{{ user.name }} - Copy over SSH public key from entry'
   tags: ['role::bootstrap:users']
   win_copy:
@@ -50,3 +44,10 @@
     dest: 'C:\Users\{{ user.name }}\.ssh\authorized_keys'
     src: '{{ role_path }}/files/keys/{{ user.name }}.pub'
   when: user.key is not defined
+
+- name: '{{ user.name }} - Set the owner of user SSH files'
+  tags: ['role::bootstrap:users']
+  win_owner:
+    path: 'C:\Users\{{ user.name }}\.ssh'
+    user: '{{ user.name }}'
+    recurse: true
