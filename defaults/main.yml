@@ -36,17 +36,23 @@ bootstrap__extra_packages: []
 
 # Users configuration --------------------------
 
-# Default groups for core users
-bootstrap__default_core_groups:
-  - 'Administrators'
+# Default groups for all users
+bootstrap__default_groups:
   - 'Remote Desktop Users'
 
-# users to add to every host, this also supports a `key` attribute
+# Default groups for admin users
+bootstrap__admin_groups:
+  - 'Administrators'
+
+# Users to add to every host, other supported attribtues are:
+# * `key` - Provide public key for SSH access. (Default: None )
+# # `admin` - Whether user is given admin rights. (Default: false)
+# * `win_group` - Windows groups don't match Linux ones. (Default: [])
 bootstrap__active_core_users:
-  - { name: admin,  win_groups: '{{ bootstrap__default_core_groups }}' }
-  - { name: jakub,  win_groups: '{{ bootstrap__default_core_groups }}' }
-  - { name: arthur, win_groups: '{{ bootstrap__default_core_groups }}' }
-  - { name: petty,  win_groups: '{{ bootstrap__default_core_groups }}' }
+  - { name: admin,  admin: true }
+  - { name: jakub,  admin: true }
+  - { name: arthur, admin: true }
+  - { name: petty,  admin: true }
 
 # Any additional users that need access
 bootstrap__active_extra_users: []
