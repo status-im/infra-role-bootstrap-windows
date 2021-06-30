@@ -17,7 +17,7 @@
     name: '{{ user.name }}'
     groups: |
       {{ user.get("win_groups", []) + bootstrap__default_groups +
-      (item.get("admin", false) | ternary(bootstrap__admin_groups, []))
+      (user.get("admin", false) | ternary(bootstrap__admin_groups, []))
       | list }}
     profile: 'C:\Users\{{ user.name }}'
     home_directory: 'C:\Users\{{ user.name }}'
