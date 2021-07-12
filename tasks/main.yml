@@ -1,4 +1,7 @@
 ---
+- import_tasks: ansible.yml
+  tags: ['role::bootstrap:ansible']
+
 - import_tasks: logging/main.yml
   tags: ['role::bootstrap:logging']
 
