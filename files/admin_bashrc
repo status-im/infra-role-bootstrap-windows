@@ -1,0 +1,87 @@
+# vim: set ft=sh:
+ 
+# load system defaults
+[ -f /etc/profile ] && source /etc/profile
+
+# General ------------------------------------------------------------
+
+# Vim mode
+set -o vi
+# Prevent file overwrite on stdout redirection
+# Use `>|` to force redirection to an existing file
+set -o noclobber
+# Enable history expansion with space
+# E.g. typing !!<space> will replace the !! with your last command
+bind Space:magic-space
+# Turn on recursive globbing (enables ** to recurse all directories)
+shopt -s globstar 2> /dev/null
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob;
+
+# Completion ---------------------------------------------------------
+
+# Perform file completion in a case insensitive fashion
+bind "set completion-ignore-case on"
+# Treat hyphens and underscores as equivalent
+bind "set completion-map-case on"
+# Display matches for ambiguous patterns at first tab press
+bind "set show-all-if-ambiguous on"
+# Immediately add a trailing slash when autocompleting symlinks to directories
+bind "set mark-symlinked-directories on"
+
+# History ------------------------------------------------------------
+
+# Append to the history file, don't overwrite it
+shopt -s histappend
+# Save multi-line commands as one command
+shopt -s cmdhist
+# Record each line as it gets issued
+PROMPT_COMMAND='history -a'
+# Huge history. Doesn't appear to slow things down, so why not?
+HISTSIZE=500000
+HISTFILESIZE=100000
+# Avoid duplicate entries
+HISTCONTROL="erasedups:ignoreboth"
+# Don't record some commands
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
+# Use standard ISO 8601 timestamp: %F = %Y-%m-%d, %T = %H:%M:%S
+HISTTIMEFORMAT='%F %T '
+
+# Enable incremental history search with up/down arrows (also Readline goodness)
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+bind '"\e[C": forward-char'
+bind '"\e[D": backward-char'
+
+# Navigation ---------------------------------------------------------
+
+# Prepend cd to directory names automatically
+shopt -s autocd 2> /dev/null
+# Correct spelling errors during tab-completion
+shopt -s dirspell 2> /dev/null
+# Correct spelling errors in arguments supplied to cd
+shopt -s cdspell 2> /dev/null
+
+# Automatically trim long paths in the prompt (requires Bash 4.x)
+PROMPT_DIRTRIM=2
+
+export EDITOR='vim'
+export PROMPT='%F{yellow}%n%f@%F{green}%M%f:%F{blue}%~%f %# '
+export FZF_DEFAULT_OPTS="--extended-exact --height=100% --layout=default"
+export GREP_OPTIONS='--color=auto -i'
+
+# Aliases ------------------------------------------------------------
+
+alias cp='cp -i'
+alias rm='rm -i'
+alias mv='mv -i'
+alias ll='ls -lh --color'
+alias grep='grep --color -i'
+
+function g {
+    if [[ $# > 0 ]]; then
+        git "$@"
+    else
+        git status
+    fi
+}

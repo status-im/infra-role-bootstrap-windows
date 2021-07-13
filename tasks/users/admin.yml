@@ -29,3 +29,9 @@
   win_copy:
     src: 'Profile.ps1'
     dest: 'C:\Users\admin\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1'
+
+- name: Create Bash config file
+  tags: ['role::bootstrap:users']
+  win_copy:
+    src: 'admin_bashrc'
+    dest: 'C:\Users\admin\.bashrc'
