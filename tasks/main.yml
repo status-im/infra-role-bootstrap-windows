@@ -17,3 +17,7 @@
 
 - import_tasks: openssh/main.yml
   tags: ['role::bootstrap:openssh']
+
+- import_role: name=infra-role-wireguard
+  tags: ['role::wireguard']
+  when: bootstrap__wireguard_enabled|bool

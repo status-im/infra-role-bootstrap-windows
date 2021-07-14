@@ -110,3 +110,6 @@ bootstrap__consul_config:
   limits:
     https_handshake_timeout: '10s'
     http_max_conns_per_client: 500
+
+# WireGuard VPN ---------------------------------
+bootstrap__wireguard_enabled: true
