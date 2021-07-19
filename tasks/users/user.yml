@@ -45,7 +45,7 @@
   tags: ['role::bootstrap:users']
   win_copy:
     dest: 'C:\Users\{{ user.name }}\.ssh\authorized_keys'
-    src: '{{ role_path }}/files/keys/{{ user.name }}.pub'
+    src: '{{ role_path }}\files\keys\{{ user.name }}.pub'
   when: user.key is not defined
 
 - name: '{{ user.name }} - Set the owner of user SSH files'

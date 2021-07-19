@@ -7,14 +7,14 @@
   win_get_url:
     url: 'https://status-misc.ams3.digitaloceanspaces.com/git-2.28.0.windows.1.tar.gz'
     checksum: '8c75921d8f391a3c0f6e87621740405d1b2490e7'
-    dest: 'C:/ProgramData/scoop/apps/git/git-2.28.0.windows.1.tar.gz'
+    dest: 'C:\ProgramData\scoop\apps\git\git-2.28.0.windows.1.tar.gz'
 
 - name: Unpack Git 2.28.0
   tags: ['role::bootstrap:packages']
   win_shell: 'tar xf git-2.28.0.windows.1.tar.gz'
   args:
-    chdir: 'C:/ProgramData/scoop/apps/git'
-    creates: 'C:/ProgramData/scoop/apps/git/2.28.0.windows.1/git-bash.exe'
+    chdir: 'C:\ProgramData\scoop\apps\git'
+    creates: 'C:\ProgramData\scoop\apps\git\2.28.0.windows.1\git-bash.exe'
 
 - name: Downgrade Git to 2.28.0
   tags: ['role::bootstrap:packages']

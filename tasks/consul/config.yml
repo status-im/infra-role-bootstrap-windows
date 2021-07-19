@@ -3,7 +3,7 @@
   tags: ['role::bootstrap:consul']
   win_copy:
     src: 'files/{{ item }}'
-    dest: '{{ bootstrap__consul_certs_dir }}/{{ item }}'
+    dest: '{{ bootstrap__consul_certs_dir }}\{{ item }}'
   with_items:
     - consul-ca.crt
     - consul-client.crt
@@ -12,7 +12,7 @@
 - name: Consul | Create consul config file
   tags: ['role::bootstrap:consul']
   win_copy:
-    dest: '{{ bootstrap__consul_config_dir }}/config.json'
+    dest: '{{ bootstrap__consul_config_dir }}\config.json'
     content: ' {{ bootstrap__consul_config | to_nice_json }}'
   notify:
     - Restart consul

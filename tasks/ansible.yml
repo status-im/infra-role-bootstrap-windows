@@ -2,5 +2,5 @@
 - name: Create custom fact directory
   tags: ['role::bootstrap:ansible']
   win_file:
-    path: 'C:/ansible/facts.d'
+    path: 'C:\ansible\facts.d'
     state: directory
